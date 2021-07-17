@@ -25,7 +25,7 @@ export const validRegister = async (
     errors.push('Password must be at least 6 chars.')
   }
 
-  if (errors.length > 0) res.status(400).json({ msg: errors })
+  if (errors.length > 0) return res.status(400).json({ msg: errors })
 
   next()
 }
