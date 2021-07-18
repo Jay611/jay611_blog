@@ -16,3 +16,6 @@ code {
 
 /* ---------- Auth Page ---------- */
 @import url('./auth.css');
+
+/* ---------- Loading ---------- */
+@import url('./loading.css');
