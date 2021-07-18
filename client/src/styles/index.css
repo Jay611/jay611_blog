@@ -19,3 +19,6 @@ code {
 
 /* ---------- Loading ---------- */
 @import url('./loading.css');
+
+/* ---------- Alert ---------- */
+@import url('./alert.css');

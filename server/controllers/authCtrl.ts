@@ -42,7 +42,7 @@ const authCtrl = {
         sendSMS(account, url, 'Verify your phone number.')
         return res.json({ msg: 'Success! Please check your phone.' })
       }
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).json({ msg: err.message })
     }
   },
@@ -58,22 +58,16 @@ const authCtrl = {
       if (!newUser)
         return res.status(400).json({ msg: 'Invalid Authentication.' })
 
-      const user = new Users(newUser)
+      const user = await Users.findOne({ account: newUser.account })
+      if (user) return res.status(400).json({ msg: 'Account already exists.' })
 
-      await user.save()
+      const new_user = new Users(newUser)
+
+      await new_user.save()
 
       res.json({ msg: 'Account has been activated!' })
-    } catch (err) {
-      let errMsg
-      console.log(err)
-
-      if (err.code === 11000) {
-        errMsg = Object.keys(err.keyValue)[0] + ' already exists.'
-      } else {
-        let name = Object.keys(err.errors)[0]
-        errMsg = err.errors[`${name}`].message
-      }
-      return res.status(500).json({ msg: errMsg })
+    } catch (err: any) {
+      return res.status(500).json({ msg: err.message })
     }
   },
   login: async (req: Request, res: Response) => {
@@ -86,7 +80,7 @@ const authCtrl = {
 
       // if user exists
       loginUser(user, password, res)
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).json({ msg: err.message })
     }
   },
@@ -94,7 +88,7 @@ const authCtrl = {
     try {
       res.clearCookie('refreshtoken', { path: `/api/refresh_token` })
       return res.json({ msg: 'Logged out!' })
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).json({ msg: err.message })
     }
   },
@@ -115,7 +109,7 @@ const authCtrl = {
       const access_token = generateAccessToken({ id: user._id })
 
       res.json({ access_token })
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).json({ msg: err.message })
     }
   },
