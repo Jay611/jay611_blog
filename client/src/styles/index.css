@@ -21,6 +21,11 @@ code {
   border-radius: 50%;
 }
 
+.active {
+  opacity: 1 !important;
+  text-decoration: underline;
+}
+
 /* ---------- Auth Page ---------- */
 @import url('./auth.css');
 

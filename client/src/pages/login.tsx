@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+
 import LoginPass from '../components/auth/LoginPass'
 import LoginSMS from '../components/auth/LoginSMS'
+import SocialLogin from '../components/auth/SocialLogin'
 
 import { RootStore } from '../utils/TypeScript'
 
@@ -20,6 +22,8 @@ const Login = () => {
     <div className="auth_page">
       <div className="auth_box">
         <h3 className="text-center text-uppercase mb-4">Login</h3>
+
+        <SocialLogin />
 
         {sms ? <LoginSMS /> : <LoginPass />}
 

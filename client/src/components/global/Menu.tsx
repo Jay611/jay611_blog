@@ -26,9 +26,13 @@ const Menu = () => {
   }
 
   return (
-    <ul className="navbar-nav ms-auto" style={{ opacity: 0.5 }}>
+    <ul className="navbar-nav ms-auto">
       {navLinks.map((link, index) => (
-        <li key={index} className={`nav-item ${isActive(link.path)}`}>
+        <li
+          key={index}
+          className={`nav-item ${isActive(link.path)}`}
+          style={{ opacity: 0.5 }}
+        >
           <Link className="nav-link" to={link.path}>
             {link.label}
           </Link>
