@@ -27,7 +27,7 @@ const Login = () => {
           </span>
         </small>
 
-        <p>
+        <p className="mt-2">
           You don't have an account?
           <Link to="/register" className="ms-2" style={{ color: 'crimson' }}>
             Register Now
