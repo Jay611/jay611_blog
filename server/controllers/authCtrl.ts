@@ -150,7 +150,7 @@ const authCtrl = {
           account: email,
           password: passwordHash,
           avatar: picture,
-          type: 'login',
+          type: 'google',
         }
         registerUser(user, res)
       }
@@ -181,7 +181,7 @@ const authCtrl = {
           account: email,
           password: passwordHash,
           avatar: picture.data.url,
-          type: 'login',
+          type: 'facebook',
         }
         registerUser(user, res)
       }
@@ -219,7 +219,7 @@ const authCtrl = {
           name: phone,
           account: phone,
           password: passwordHash,
-          type: 'login',
+          type: 'sms',
         }
         registerUser(user, res)
       }
@@ -231,8 +231,13 @@ const authCtrl = {
 
 const loginUser = async (user: IUser, password: string, res: Response) => {
   const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) return res.status(400).json({ msg: 'Password is incorrect.' })
-
+  if (!isMatch) {
+    let errMsg =
+      user.type === 'register'
+        ? 'Password is incorrect.'
+        : `Password is incorrect. This account login with ${user.type}`
+    return res.status(400).json({ msg: errMsg })
+  }
   const access_token = generateAccessToken({ id: user._id })
   const refresh_token = generateRefreshsToken({ id: user._id })
 

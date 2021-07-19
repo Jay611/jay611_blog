@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from '../../redux/actions/profileAction'
+import { resetPassword, updateUser } from '../../redux/actions/profileAction'
 import {
   FormSubmit,
   InputChange,
@@ -43,8 +43,12 @@ const UserInfo = () => {
 
   const handleSubmit = (e: FormSubmit) => {
     e.preventDefault()
-    if(avatar || name){
+    if (avatar || name) {
       dispatch(updateUser(avatar as File, name, auth))
+    }
+
+    if (password && auth.access_token) {
+      dispatch(resetPassword(password, cf_password, auth.access_token))
     }
   }
 
@@ -93,7 +97,13 @@ const UserInfo = () => {
         />
       </div>
 
-      <div className="form-group my-3">
+      {auth.user.type !== 'register' && (
+        <small className="text-danger">
+          * Quick login account with {auth.user.type} can't change password *
+        </small>
+      )}
+
+      <div className="form-group mb-3">
         <label htmlFor="password">Password</label>
 
         <div className="pass">
@@ -103,6 +113,7 @@ const UserInfo = () => {
             id="password"
             name="password"
             value={password}
+            disabled={auth.user.type !== 'register'}
             onChange={handleChangeInput}
           />
           <small onClick={() => setTypePass(!typePass)}>
@@ -121,6 +132,7 @@ const UserInfo = () => {
             id="cf_password"
             name="cf_password"
             value={cf_password}
+            disabled={auth.user.type !== 'register'}
             onChange={handleChangeInput}
           />
           <small onClick={() => setTypeCfPass(!typeCfPass)}>
