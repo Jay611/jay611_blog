@@ -10,9 +10,15 @@ import {
 import sendMail from '../config/sendMail'
 import { sendSMS } from '../config/sendSMS'
 import { validateEmail, validPhone } from '../middleware/valid'
-import { IDecodedToken, IUser, IGgPayload, IUserParams } from '../config/interface'
+import {
+  IDecodedToken,
+  IUser,
+  IGgPayload,
+  IUserParams,
+} from '../config/interface'
 
 import { OAuth2Client } from 'google-auth-library'
+import fetch from 'node-fetch'
 
 const client = new OAuth2Client(`${process.env.MAIL_CLIENT_ID}`)
 const CLIENT_URL = `${process.env.BASE_URL}`
@@ -152,6 +158,37 @@ const authCtrl = {
       return res.status(500).json({ msg: err.message })
     }
   },
+  facebookLogin: async (req: Request, res: Response) => {
+    try {
+      const { accessToken, userID } = req.body
+
+      const URL = `https://graph.facebook.com/v3.0/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+
+      const data = await fetch(URL).then((res) => res.json())
+
+      const { name, email, picture } = data
+
+      const password = email + `${process.env.PASSWORD_SUFFIX}`
+      const passwordHash = await bcrypt.hash(password, 12)
+
+      const user = await Users.findOne({ account: email })
+
+      if (user) {
+        loginUser(user, password, res)
+      } else {
+        const user = {
+          name,
+          account: email,
+          password: passwordHash,
+          avatar: picture.data.url,
+          type: 'login',
+        }
+        registerUser(user, res)
+      }
+    } catch (err: any) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
 }
 
 const loginUser = async (user: IUser, password: string, res: Response) => {
@@ -175,7 +212,6 @@ const loginUser = async (user: IUser, password: string, res: Response) => {
 }
 
 const registerUser = async (user: IUserParams, res: Response) => {
-
   const newUser = new Users(user)
   await newUser.save()
 
