@@ -26,8 +26,8 @@ export const updateUser =
           access_token: auth.access_token,
           user: {
             ...auth.user,
-            avatar: url ?? auth.user.avatar,
-            name: name ?? auth.user.name,
+            avatar: url ? url : auth.user.avatar,
+            name: name ? name : auth.user.name,
           },
         },
       })
@@ -35,8 +35,8 @@ export const updateUser =
       const res = await patchAPI(
         'user',
         {
-          avatar: url ?? auth.user.avatar,
-          name: name ?? auth.user.name,
+          avatar: url ? url : auth.user.avatar,
+          name: name ? name : auth.user.name,
         },
         auth.access_token
       )

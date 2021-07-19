@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      default: 'register', // or login
+      default: 'register', // or google / facebook / sms
     },
   },
   { timestamps: true }
