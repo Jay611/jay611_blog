@@ -17,6 +17,7 @@ app.use(cookieParser())
 
 // Routes
 app.use('/api', routes.authRouter)
+app.use('/api', routes.userRouter)
 
 // Database
 import './config/database'
@@ -24,5 +25,5 @@ import './config/database'
 // Server listening
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-	console.log('Server is running on port', PORT)
+  console.log('Server is running on port', PORT)
 })

@@ -24,7 +24,7 @@ const UserInfo = () => {
   const [typePass, setTypePass] = useState(false)
   const [typeCfPass, setTypeCfPass] = useState(false)
 
-  const { name, account, avatar, password, cf_password } = user
+  const { name, avatar, password, cf_password } = user
 
   const handleChangeInput = (e: InputChange) => {
     const { name, value } = e.target

@@ -24,7 +24,7 @@ export interface IUserRegister extends IUserLogin {
 
 export interface IUser extends IUserLogin {
   avatar: string
-  createdAt: String
+  createdAt: string
   name: string
   role: string
   type: string
