@@ -35,5 +35,5 @@ export interface IUserParams {
   account: string
   password: string
   avatar?: string
-  type: string
+  type?: string
 }
