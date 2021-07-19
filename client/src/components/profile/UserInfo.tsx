@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { updateUser } from '../../redux/actions/profileAction'
 import {
   FormSubmit,
   InputChange,
@@ -42,6 +43,9 @@ const UserInfo = () => {
 
   const handleSubmit = (e: FormSubmit) => {
     e.preventDefault()
+    if(avatar || name){
+      dispatch(updateUser(avatar as File, name, auth))
+    }
   }
 
   if (!auth.user) return <NotFound />
