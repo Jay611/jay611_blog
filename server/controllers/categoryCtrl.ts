@@ -15,7 +15,7 @@ const categoryCtrl = {
       const newCategory = new Categories({ name })
       await newCategory.save()
 
-      res.json({ newCategory })
+      res.json({ msg: 'Create Success!', newCategory })
     } catch (err: any) {
       let errMsg
 
@@ -43,6 +43,7 @@ const categoryCtrl = {
     if (req.user.role !== 'admin')
       return res.status(400).json({ msg: 'Invalid Authentication.' })
 
+    const { name } = req.body
     try {
       const category = await Categories.findOneAndUpdate(
         { _id: req.params.id },

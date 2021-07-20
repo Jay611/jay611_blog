@@ -37,3 +37,6 @@ code {
 
 /* ---------- Profile ---------- */
 @import url('./profile.css');
+
+/* ---------- Category ---------- */
+@import url('./category.css');

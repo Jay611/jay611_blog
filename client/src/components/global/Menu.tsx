@@ -39,6 +39,17 @@ const Menu = () => {
         </li>
       ))}
 
+      {auth.user?.role === 'admin' && (
+        <li
+          className={`nav-item ${isActive('/category')}`}
+          style={{ opacity: 0.5 }}
+        >
+          <Link className="nav-link" to="/category">
+            Category
+          </Link>
+        </li>
+      )}
+
       {auth.user && (
         <li className="nav-item dropdown">
           <span
