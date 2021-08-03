@@ -1,10 +1,14 @@
 export const checkImage = (file: File) => {
+  const types = ['image/png', 'image/jpeg']
   let err = ''
   // if (!file) return (err = 'File does not exist.')
 
   if (file.size > 1024 * 1024)
     // 1mb
     err = 'The largest image size is 1mb.'
+
+  if (!types.includes(file.type))
+    err = 'The image format incorrect. (image type is png or jpeg)'
 
   return err
 }
@@ -21,5 +25,5 @@ export const imageUpload = async (file: File) => {
   })
 
   const data = await res.json()
-  return {public_id: data.public_id, url: data.secure_url}
+  return { public_id: data.public_id, url: data.secure_url }
 }
