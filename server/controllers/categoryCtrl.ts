@@ -43,11 +43,10 @@ const categoryCtrl = {
     if (req.user.role !== 'admin')
       return res.status(400).json({ msg: 'Invalid Authentication.' })
 
-    const { name } = req.body
     try {
       const category = await Categories.findOneAndUpdate(
         { _id: req.params.id },
-        { name }
+        { name: req.body.name.toLowerCase() }
       )
       res.json({ msg: 'Update Success!' })
     } catch (err: any) {

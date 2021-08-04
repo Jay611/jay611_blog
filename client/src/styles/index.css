@@ -40,3 +40,6 @@ code {
 
 /* ---------- Category ---------- */
 @import url('./category.css');
+
+/* ---------- Home ---------- */
+@import url('./home.css');

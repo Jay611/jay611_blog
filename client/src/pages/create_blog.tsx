@@ -42,6 +42,7 @@ const Create_blog = () => {
     const check = validCreateBlog({ ...blog, content: text })
     if (check.errLength !== 0) {
       dispatch({ type: ALERT, payload: { errors: check.errMsg } })
+			return ;
     }
 
     let newData = { ...blog, content: body }
